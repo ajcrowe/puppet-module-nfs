@@ -4,22 +4,22 @@ class nfs::client::debian::service {
     require => Class['nfs::client::debian::configure']
   }
 
-    service { "portmap":
+  if $::lsbdistcodename != 'wheezy' {
+    service { 'portmap':
       ensure    => running,
       enable    => true,
-      hasstatus => false,
+      hasstatus => true,
     } 
+  }
 
   if $nfs::client::debian::nfs_v4 {
-    service {
-      'idmapd':
-        ensure => running,
-        subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common'],
+    service { 'nfs-common':
+      ensure    => running,
+      subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common'],
     }
   } else {
-      service {
-        'idmapd':
-          ensure => stopped,
-      }
+    service { 'nfs-common':
+      ensure => stopped,
+    }
   }
 }
