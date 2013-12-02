@@ -8,18 +8,20 @@ class nfs::client::debian::service {
     service { 'portmap':
       ensure    => running,
       enable    => true,
-      hasstatus => true,
+      hasstatus => true
     } 
   }
 
   if $nfs::client::debian::nfs_v4 {
     service { 'nfs-common':
       ensure    => running,
-      subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common'],
+      enable    => true,
+      subscribe => Augeas['/etc/idmapd.conf', '/etc/default/nfs-common']
     }
   } else {
     service { 'nfs-common':
-      ensure => stopped,
+      ensure => running,
+      enable    => true
     }
   }
 }
