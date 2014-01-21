@@ -44,7 +44,7 @@ class nfs::client (
   $nfs_v4_idmap_domain = $nfs::params::nfs_v4_idmap_domain
 ) inherits nfs::params {
 
-  include 'nfs::client::${osfamily}'
+  include "nfs::client::${osfamily}"
   #class{ "nfs::client::${osfamily}":
   #  nfs_v4              => $nfs_v4,
   #  nfs_v4_idmap_domain => $nfs_v4_idmap_domain,
