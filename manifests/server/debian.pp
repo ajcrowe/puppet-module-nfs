@@ -4,10 +4,11 @@ class nfs::server::debian(
   $nfs_v4_idmap_domain = undef
 ) {
 
-  class{ 'nfs::client::debian':
-    nfs_v4              => $nfs_v4,
-    nfs_v4_idmap_domain => $nfs_v4_idmap_domain,
-  }
+  include nfs::client::debian
+  #class{ 'nfs::client::debian':
+  #  nfs_v4              => $nfs_v4,
+  #  nfs_v4_idmap_domain => $nfs_v4_idmap_domain,
+  #}
 
   package { 'nfs-kernel-server':
       ensure => 'installed',
